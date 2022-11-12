@@ -4,10 +4,13 @@ using WebAPI.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<TareasContext>(p =>
-{
-    p.UseInMemoryDatabase("TareasDB");
-});
+//BASE DE DATOS EN MEMORIA PARA PROBAR LOS MODELOS
+//builder.Services.AddDbContext<TareasContext>(p =>
+//{
+//    p.UseInMemoryDatabase("TareasDB");
+//});
+
+builder.Services.AddSqlServer<TareasContext>(builder.Configuration.GetConnectionString("SQLServer_PlatziDb"));
 
 var app = builder.Build();
 
