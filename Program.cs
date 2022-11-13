@@ -18,8 +18,17 @@ app.MapGet("/", () => "Hello World!");
 
 app.MapGet("/dbConexion", async ([FromServices] TareasContext dbContext) =>
 {
+    dbContext.Database.EnsureDeleted();
     dbContext.Database.EnsureCreated();
-    return Results.Ok("Base de datos en memoria: " + dbContext.Database.IsInMemory());
+    if (dbContext.Database.IsInMemory())
+    {
+        return Results.Ok("Base de datos en memoria");
+    }
+    else if (dbContext.Database.IsSqlServer())
+    {
+        return Results.Ok("Base de datos SQL Server");
+    }
+    return Results.Problem("Sin Base de datos");
 });
 
 app.Run();

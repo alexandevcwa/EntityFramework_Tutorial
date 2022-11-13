@@ -12,7 +12,6 @@ public class Categoria
     [MaxLength(150)]
     public String Nombre { get; set; }
 
-
     public String Descripcion { get; set; }
 
     public virtual ICollection<Tarea> Tareas { get; set; }

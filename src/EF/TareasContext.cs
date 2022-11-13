@@ -10,4 +10,28 @@ public class TareasContext : DbContext
     public DbSet<Tarea> Tareas { get; set; }
 
     public TareasContext(DbContextOptions<TareasContext> options) : base(options) { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        //FLUENT API
+        modelBuilder.Entity<Categoria>(categoria =>
+        {
+            categoria.ToTable("Categorias");
+            categoria.HasKey(p => p.CategoriaId);
+            categoria.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
+            categoria.Property(p => p.Descripcion);
+        });
+
+        modelBuilder.Entity<Tarea>(tarea => 
+        {
+            tarea.ToTable("Tareas");
+            tarea.HasKey(p => p.TareaId);
+            tarea.HasOne(p => p.Categoria).WithMany(p => p.Tareas).HasForeignKey(p => p.CategoriaId);
+            tarea.Property(p => p.Titulo).IsRequired().HasMaxLength(200);
+            tarea.Property(p => p.Descripcion);
+            tarea.Property(p => p.PrioridadTareas);
+            tarea.Property(p => p.FechaCreacion);
+            tarea.Ignore(p => p.Resumen);
+        });
+    }
 }

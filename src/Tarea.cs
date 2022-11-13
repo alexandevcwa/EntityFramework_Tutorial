@@ -24,7 +24,7 @@ public class Tarea
 
     public virtual Categoria Categoria { get; set; }
 
-    [NotMapped]
+    //[NotMapped]
     public string Resumen { get; set; }
 
 }
