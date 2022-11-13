@@ -20,8 +20,9 @@ public class TareasContext : DbContext
             categoria.HasKey(p => p.CategoriaId);
             categoria.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
             categoria.Property(p => p.Descripcion);
+            categoria.Property(p => p.Peso);    //Propiedad nueva para generar una migración
         });
-
+        //FLUENT API
         modelBuilder.Entity<Tarea>(tarea => 
         {
             tarea.ToTable("Tareas");
